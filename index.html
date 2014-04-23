@@ -1,79 +1,153 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="H5f : a JavaScript library that allows you to use the HTML5 Forms chapters new field input types, attributes and constraint validation API in non-supporting browsers." />
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<link rel="stylesheet" type="text/css" href="_styles.css" media="screen" />
+	
+	<script type="text/javascript" src="../H5F.js"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+			/*
+				Accepts HTMLFormElement, HTMLCollection of HTMLFormElements, or Array of HTMLFormElements.
+				Optional object of options: validClass, invalidClass, requiredClass
+				
+				e.g. 
+				
+				H5F.setup([d.getElementById("signup"),d.getElementById("anotherform")], {
+					validClass: "valid",
+					invalidClass: "invalid",
+					requiredClass: "required"
+				});
+			*/
+			H5F.setup(document.getElementById("signup"));
+		}
+	</script>
+	
+	<title>Validate those forms with CSS3 Basic UI module pseudo-classes, HTML5 Form attributes and consraint validation API</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+</head>
+<body>
+	
+	<form id="signup">
+		<h1>Sign up now!</h1>
+		
+		<h2>Fields marked (*) are required</h2>
+		
+		<fieldset>
+			<legend>Your details</legend>
+			
+			<ol>
+				<li>
+					<label for="fullname">Name *</label> 
+					<input type="text" id="fullname" name="fullname" placeholder="Full name" required />
+				</li>
+				<li>
+					<label for="email">Email *</label> 
+					<input type="email" id="email" name="email" placeholder="e.g. ryan@example.net" title="Please enter a valid email" required />
+				</li>
+				<li>
+					<label for="dob">DOB</label>
+					<input type="date" id="date" name="date" />
+				</li>
+				<li>
+					<label for="tel">Phone *</label> 
+					<input type="tel" id="tel" name="tel" pattern="\d{10}" placeholder="Please enter a ten digit phone number" required />
+				</li>
+				<li>
+					<label for="date">Date *</label> 
+					<input type="date" id="date" name="date" required />
+				</li>
+				<li>
+					<label for="nickname">Nick name</label> 
+					<input type="text" id="nickname" name="nickname" pattern="\w{4,}" placeholder="A nickname that is atleast four characters" />
+				</li>
+				<li>
+					<label for="other">Other</label> 
+					<input type="text" id="other" name="other" placeholder="Other information" />
+				</li>
+				<li class="radchecks">
+					<span class="label">Checkboxes</span>
+					<input type="checkbox" id="checkbox1" name="group1" required />
+					<label for="checkbox1">Checkbox 1</label> 
+					
+					<input type="checkbox" id="checkbox2" name="group1" required />
+					<label for="checkbox2">Checkbox 2</label> 
+					
+					<input type="checkbox" id="checkbox3" name="group1" required />
+					<label for="checkbox3">Checkbox 3</label> 
+				</li>
+				<li class="radchecks">
+					<span class="label">Radios</span>
+					<input type="radio" id="radio1" name="group2" required />
+					<label for="radio1">Radio 1</label> 
+					
+					<input type="radio" id="radio2" name="group2" />
+					<label for="radio2">Radio 2</label> 
+					
+					<input type="radio" id="radio3" name="group2" />
+					<label for="radio3">Radio 3</label> 
+				</li>
+			</ol>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Delivery address</legend>
+			<ol>
+				<li>
+					<label for="address">Address *</label>
+					<input id="address" name="address" type="text" required />
+				</li>
+				<li>
+					<label for="suburb">Suburb *</label>
+					<input id="suburb" name="suburb" type="text" required />
+				</li>
+				<li>
+					<label for="postcode">Post code *</label>
+					<input id="postcode" name="postcode" type="number" min="1001" max="8000" step="2" required maxlength="4" />
+				</li>
+				<li>
+					<label for="state">State</label>
+					<select name="state" id="state" required>
+						<option>Choose state</option>
+						<option value="ACT">ACT</option>
+						<option>NSW</option>
+						<option>NT</option>
+						<option>QLD</option>
+						<option>SA</option>
+						<option>TAS</option>
+						<option>VIC</option>
+						<option>WA</option>
+					</select>
+				</li>
+			</ol>
+		</fieldset>
 
-    <title>H5f</title>
-  </head>
+		<fieldset>
+			<legend>Membership information</legend>
+			<ol>		
+				<li>
+					<label for="username">Username *</label>
+					<input id="username" name="username" type="text" pattern="\w{4,}" placeholder="Atleast 4 alphanumeric characters" required />
+				</li>
+				<li>
+					<label for="password">Password *</label>
+					<input id="password" name="password" type="password" required title="Minimum 8 characters, one number, one uppercase and one lowercase letter" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*" /> 
+				</li>
+				<li>
+					<label for="url">Website *</label> 
+					<input type="url" name="url" id="url" required />
+				</li>
+			</ol>
+		</fieldset>
+		
+		<input type="submit" value="Save" formnovalidate />
+		<button formnovalidate>Button Save</button>
+		<input type="submit" value="Sign up" />
 
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/JonRowe/H5F">View on GitHub</a>
-
-          <h1 id="project_title">H5f</h1>
-          <h2 id="project_tagline">a JavaScript library that allows you to use the HTML5 Forms chapters new field input types, attributes and constraint validation API in non-supporting browsers.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/JonRowe/H5F/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/JonRowe/H5F/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">H5f maintained by <a href="https://github.com/JonRowe">JonRowe</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+	</form>
+	
+</body>
 </html>
